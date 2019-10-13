@@ -1,8 +1,6 @@
 import {combineReducers} from 'redux';
 import createPagination, {
-  selectPageItems,
-  selectNextPage,
-  selectTotalCount,
+  selectors as paginationSelectors,
 } from './higherOrderReducers/createPagination';
 import * as actionTypes from '../constants/actionTypes';
 import createByKey from './higherOrderReducers/createByKey';
@@ -30,26 +28,36 @@ export default pagination;
 
 export const selectors = {
   // Popular Movies
-  selectPopularMovieIds: state => selectPageItems(state.popularMovies),
-  selectPopularMoviesNextPage: state => selectNextPage(state.popularMovies),
+  selectPopularMovieIds: state =>
+    paginationSelectors.selectPageItems(state.popularMovies),
+  selectPopularMoviesNextPage: state =>
+    paginationSelectors.selectNextPage(state.popularMovies),
 
   // Popular People
-  selectPopularPeopleIds: state => selectPageItems(state.popularPeople),
-  selectPopularPeopleNextPage: state => selectNextPage(state.popularPeople),
+  selectPopularPeopleIds: state =>
+    paginationSelectors.selectPageItems(state.popularPeople),
+  selectPopularPeopleNextPage: state =>
+    paginationSelectors.selectNextPage(state.popularPeople),
 
   // MovieSearchResultsByQuery
   selectMovieSearchResultIds: (state, query) =>
-    selectPageItems(state.movieSearchResultsByQuery[query]),
+    paginationSelectors.selectPageItems(state.movieSearchResultsByQuery[query]),
   selectMovieSearchResultsNextPage: (state, query) =>
-    selectNextPage(state.movieSearchResultsByQuery[query]),
+    paginationSelectors.selectNextPage(state.movieSearchResultsByQuery[query]),
   selectMovieSearchResultsTotalCount: (state, query) =>
-    selectTotalCount(state.movieSearchResultsByQuery[query]),
+    paginationSelectors.selectTotalCount(
+      state.movieSearchResultsByQuery[query],
+    ),
 
   // PersonSearchResultsByQuery
   selectPersonSearchResultIds: (state, query) =>
-    selectPageItems(state.personSearchResultsByQuery[query]),
+    paginationSelectors.selectPageItems(
+      state.personSearchResultsByQuery[query],
+    ),
   selectPersonSearchResultsNextPage: (state, query) =>
-    selectNextPage(state.personSearchResultsByQuery[query]),
+    paginationSelectors.selectNextPage(state.personSearchResultsByQuery[query]),
   selectPersonSearchResultsTotalCount: (state, query) =>
-    selectTotalCount(state.personSearchResultsByQuery[query]),
+    paginationSelectors.selectTotalCount(
+      state.personSearchResultsByQuery[query],
+    ),
 };
