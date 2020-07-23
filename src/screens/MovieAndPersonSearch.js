@@ -20,21 +20,25 @@ function MovieAndPersonSearch() {
   const dispatch = useDispatch();
 
   const movieIds =
-    useSelector(state =>
+    useSelector((state) =>
       selectors.selectMovieSearchResultIds(state, debouncedSearchValue),
     ) || [];
-  const movies = useSelector(state => selectors.selectMovies(state, movieIds));
+  const movies = useSelector((state) =>
+    selectors.selectMovies(state, movieIds),
+  );
 
   const personIds =
-    useSelector(state =>
+    useSelector((state) =>
       selectors.selectPersonSearchResultIds(state, debouncedSearchValue),
     ) || [];
-  const people = useSelector(state => selectors.selectPeople(state, personIds));
+  const people = useSelector((state) =>
+    selectors.selectPeople(state, personIds),
+  );
 
-  const isFetchingMovies = useSelector(state =>
+  const isFetchingMovies = useSelector((state) =>
     selectors.selectIsFetchingMovieSearchResults(state, debouncedSearchValue),
   );
-  const isFetchingPeople = useSelector(state =>
+  const isFetchingPeople = useSelector((state) =>
     selectors.selectIsFetchingPersonSearchResults(state, debouncedSearchValue),
   );
 
@@ -46,11 +50,9 @@ function MovieAndPersonSearch() {
   }, [dispatch, debouncedSearchValue]);
 
   let suggestions = [
-    ...movies.map(movie => ({...movie, suggestionType: 'movie'})),
-    ...people.map(person => ({...person, suggestionType: 'person'})),
-  ];
-
-  suggestions = suggestions.sort((a, b) =>
+    ...movies.map((movie) => ({...movie, suggestionType: 'movie'})),
+    ...people.map((person) => ({...person, suggestionType: 'person'})),
+  ].sort((a, b) =>
     a[a.suggestionType === 'movie' ? 'title' : 'name'].localeCompare(
       b[b.suggestionType === 'movie' ? 'title' : 'name'],
     ),
@@ -60,7 +62,7 @@ function MovieAndPersonSearch() {
     <ScreenRoot afterInteractions>
       <Spinner loading={isFetchingMovies || isFetchingPeople}>
         <BaseFlatList
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={(item) => item.id.toString()}
           data={suggestions}
           renderItem={({item: suggestion}) =>
             suggestion.suggestionType === 'movie' ? (
