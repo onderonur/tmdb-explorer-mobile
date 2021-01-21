@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "axios": "^0.19.0",
-    "immer": "^4.0.1",
+    "immer": "^8.0.1",
     "lodash.debounce": "^4.0.8",
     "lodash.merge": "^4.6.2",
     "lodash.union": "^4.6.0",
